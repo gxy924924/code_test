@@ -12,16 +12,18 @@ $server = new swoole_websocket_server("0.0.0.0", 9999);
 // 另一种回调函数调用方法
 $server->on('open','onOpen');
 function onOpen($server,$request){
-	print_r($request->fd);
+	echo "client {$request->fd} start\n";
+	// $server->push($frame->fd, "you start success");
 }
 
 $server->on('message',function(swoole_websocket_server $server,$frame){
 	echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+	// 向客户端推送数据
 	$server->push($frame->fd, "this is server");
 });
 
 $server->on('close',function($ser,$fd){
-	echo "client {$fd} close\n"
+	echo "client {$fd} close\n";
 });
 
 $server->start();

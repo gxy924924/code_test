@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ws_client</title>
+</head>
+<body>
+	<h1>ws-测试</h1>
+	<script type="text/javascript">
+		var wsUrl = "ws://192.168.19.129:9999";
+
+		var websocket = new WebSocket(wsUrl);
+
+		// 实例化onOpen属性
+		websocket.onopen = function(evt){
+			websocket.send('hello i`m in');
+			console.log('connect-swoole-success');
+		}
+
+		// 实例化 onMessage
+		websocket.onmessage = function(evt){
+			console.log('ws-server-return-date:'+evt.data);
+		}
+
+		// 实例化 onclose
+		websocket.onclose = function(evt){
+			console.log("close");
+		}
+
+		// 实例化 onerror
+		websocket.onerror = function(evt,e){
+			console.log('error:'+evt.data);
+			console.log(e);
+		}
+	</script>
+</body>
+</html>
